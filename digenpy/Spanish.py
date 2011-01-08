@@ -24,14 +24,12 @@ import sys, string
 
 class Dlink():
     def __init__(self, *args):
-        args=args[0]
-        self.sm=args[0].split(':')
+        self.sm=args[0][1].split(':')
         self.dicts=[]
         self.S2=self.hexa_minus_one(self.sm[-1][1])
         if self.sm[-1][1] is 0: self.S1=self.hexa_minus_one(self.sm[-1][0])
         if self.S1 is -1: self.S2, self.S1 = [0,0]
         self.static=self.sm[5].self.sm[2]. self.sm[3].self.sm[4]
-        print self.dictionary
 
     @property
     def dictionary(self):
@@ -47,36 +45,30 @@ class Dlink():
         if hex(int(hexa, 16) - 1).split('x')[0] == "-": return -1
         return hex(int(hexa, 16) - 1).split('x')[1]
 
-
 class Tele2():
     def __init__(self, *args):
-        args=args[0]
-        self.year=args[0]
+        self.year=args[0][1]
         self.dicts=[]
-        self.fixed="IX1V" + args[1]
-        print self.dictionary
+        self.fixed="IX1V" + args[0][2]
 
     @property
     def dictionary(self):
         [[[[[[ self.dicts.append("%s%s%s%s%s%s%s%s" %(self.fixed, self.year, a, b, c, d, e, f) ) for a in range(0,9)] for b in range(0,9)] for c in range(0,9)] for d in range(0,9)] for e in range(0,9)] for f in range(0,9)]
         return self.dicts
 
-
 class Jazztel():
     def __init__(self, *args):
-        args=args[0]
-        JazztelAndTelefonica(args[0], args[1], { '00:1A:2B' : ['Comtrend', 'E001D20'] } )
+        self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], { '00:1A:2B' : ['Comtrend', 'E001D20'] } ).dictionary
 
 class Telefonica():
     def __init__(self, *args):
-        args=args[0]
-        JazztelAndTelefonica(args[1], args[2], {
+        self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], {
             "00:60:B3": ["Z-com", "Z001349"],
             "00:01:38": ["Xavi 7768r", "X000138"] ,
             "00:03:C9": ["Comtrend 535", "C0030DA"],
             "00:A0:C5": [ "Zyxel 650HW/660HW", "Z001349"],
             "00:16:38": [ "Comtrend_536+", "C0030DA"],
-            "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] })
+            "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] }).dictionary
 
 class JazztelAndTelefonica():
     def __init__(self, *args):
@@ -84,7 +76,6 @@ class JazztelAndTelefonica():
         self.essid=args[1]
         self.dicts=[]
         self.valid_routers=args[2]
-        print self.dictionary
 
     @property
     def dictionary(self):

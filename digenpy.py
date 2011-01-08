@@ -18,8 +18,14 @@
 """
 from digenpy import *
 import sys, digenpy, types
+
+def printer(a_print):
+    if __name__ == "__main__":
+        for a in a_print: print a
+
 z=[]
 module=getattr(digenpy, sys.argv[1])
 [z.append(getattr(module, sys.argv[2])) for a in dir(module)\
     if isinstance(getattr(module, a, None), types.ClassType) and a in sys.argv[2].split(',') ]
-[i(sys.argv[2:]) for i in z]
+[printer(i(sys.argv[2:]).dictionary) for i in z]
+
