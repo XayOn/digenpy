@@ -30,20 +30,25 @@ class Dlink():
         self.sm=args[0][1].split(':')
         self.dicts=[]
         self.S2=self.hexa_minus_one(self.sm[-1][1])
+        self.S1=""
         if self.sm[-1][1] is 0: self.S1=self.hexa_minus_one(self.sm[-1][0])
         if self.S1 is -1: self.S2, self.S1 = [0,0]
-        self.static=self.sm[5].self.sm[2]. self.sm[3].self.sm[4]
+        self.static="%s%s%s%s" %(self.sm[4], self.sm[1], self.sm[2],self.sm[3])
 
     @property
     def dictionary(self):
-        if self.return_:
+        if hasattr(self, 'return_'):
             return "Usage: Dlink Bssid "
         for self.F in string.hexdigits.replace('abcdef',''):
             for self.I in string.hexdigits.replace('abcdef',''):
-                self.dicts.append("%s%s%s%s%s%s%s%s%s%s\n%s%s%s%s%s%s%s%s%s%s\nz%s%s%s%s%s%s%s%s%s%s\n"\
-                    %(self.sm[6], self.sm[1], self.static, self.sm[6], self.static, self.sm[1], self.F, self.I,
-                        self.S1, self.S2, self.sm[1], self.static, self.sm[6], self.static, self.sm[1], self.F, self.I,
-                        self.S1, self.S2, self.sm[1],self.static, self.S1, self.S2, self.sm[6],self.static,self.sm[1], self.F, self.I))
+                self.dicts.append("%s%s%s%s%s%s%s%s"
+                        %(self.sm[5], self.sm[0], self.static, self.sm[5], self.static, self.sm[1], self.F, self.I))
+                self.dicts.append("%s%s%s%s%s%s%s%s%s%s%s" %(
+                            self.S1, self.S2, self.sm[0],self.static,
+                            self.S1, self.S2, self.sm[5],self.static,self.sm[0], self.F, self.I))
+                self.dicts.append("%s%s%s%s%s%s%s%s%s"
+                        %(self.S1, self.S2, self.sm[0], self.static, self.sm[5], self.static, self.sm[1], self.F, self.I))
+
         return self.dicts
 
     def hexa_minus_one(self, hexa):
@@ -62,7 +67,7 @@ class Tele2():
 
     @property
     def dictionary(self):
-        if self.return_:
+        if hasattr(self, 'return_'):
             return "Usage: Tele2 year fixed_data [''|'IV']"
         [[[[[[ self.dicts.append("%s%s%s%s%s%s%s%s" %(self.fixed, self.year, a, b, c, d, e, f) ) for a in range(0,9)] for b in range(0,9)] for c in range(0,9)] for d in range(0,9)] for e in range(0,9)] for f in range(0,9)]
         return self.dicts
@@ -100,7 +105,7 @@ class JazztelAndTelefonica():
 
     @property
     def dictionary(self):
-        if self.return_:
+        if hasattr(self, 'return_'):
             return
         a=string.hexdigits.replace('abcdef','')
         try:
