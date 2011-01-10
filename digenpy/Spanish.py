@@ -24,6 +24,9 @@ import sys, string
 
 class Dlink():
     def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.return_=1
+            return
         self.sm=args[0][1].split(':')
         self.dicts=[]
         self.S2=self.hexa_minus_one(self.sm[-1][1])
@@ -33,6 +36,8 @@ class Dlink():
 
     @property
     def dictionary(self):
+        if self.return_:
+            return "Usage: Dlink Bssid "
         for self.F in string.hexdigits.replace('abcdef',''):
             for self.I in string.hexdigits.replace('abcdef',''):
                 self.dicts.append("%s%s%s%s%s%s%s%s%s%s\n%s%s%s%s%s%s%s%s%s%s\nz%s%s%s%s%s%s%s%s%s%s\n"\
@@ -47,21 +52,34 @@ class Dlink():
 
 class Tele2():
     def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.return_=1
+            return
+        self.sm=args[0][1].split(':')
         self.year=args[0][1]
         self.dicts=[]
         self.fixed="IX1V" + args[0][2]
 
     @property
     def dictionary(self):
+        if self.return_:
+            return "Usage: Tele2 year fixed_data [''|'IV']"
         [[[[[[ self.dicts.append("%s%s%s%s%s%s%s%s" %(self.fixed, self.year, a, b, c, d, e, f) ) for a in range(0,9)] for b in range(0,9)] for c in range(0,9)] for d in range(0,9)] for e in range(0,9)] for f in range(0,9)]
         return self.dicts
 
 class Jazztel():
     def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.dictionary="Usage: Jazztel Bssid Essid"
+            return
         self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], { '00:1A:2B' : ['Comtrend', 'E001D20'] } ).dictionary
 
 class Telefonica():
     def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.dictionary="Usage: Telefonica Bssid Essid"
+            return
+
         self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], {
             "00:60:B3": ["Z-com", "Z001349"],
             "00:01:38": ["Xavi 7768r", "X000138"] ,
@@ -72,6 +90,9 @@ class Telefonica():
 
 class JazztelAndTelefonica():
     def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.return_=1
+            return
         self.sm=args[0].split(':')
         self.essid=args[1]
         self.dicts=[]
@@ -79,6 +100,8 @@ class JazztelAndTelefonica():
 
     @property
     def dictionary(self):
+        if self.return_:
+            return
         a=string.hexdigits.replace('abcdef','')
         try:
             for i in range(1, len(self.valid_routers[':'.join(self.sm[:3])])):

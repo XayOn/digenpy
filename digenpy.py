@@ -19,9 +19,31 @@
 from digenpy import *
 import sys, digenpy, types
 
+if len(sys.argv) < 2:
+    print 'Usage: %s Country Company [Year] [Mac] [ESSID]\n %s Country To see al contrys available, and\n %s Country Company to see some company specific usage\n' %(sys.argv[0], sys.argv[0], sys.argv[0])
+    sys.exit(1)
+
+if len(sys.argv) == 2:
+    print 'Available countries:'
+    for i in digenpy.__all__:
+        print i
+        mod=getattr(digenpy, i)
+        for a in dir(mod):
+            if isinstance(getattr(mod, a, None), types.ClassType):
+                help_=getattr(mod, a)('').dictionary
+                if help_:
+                    if len(a) > 9: b="\t"
+                    else: b="\t\t"
+                    print '\t%s%s%s' %(a, b, help_)
+                        
+    sys.exit(1)
+
 def printer(a_print):
     if __name__ == "__main__":
-        for a in a_print: print a
+        if a_print.__class__ is types.ClassType:
+            for a in a_print: print a
+        else:
+            print a_print
 
 z=[]
 module=getattr(digenpy, sys.argv[1])
