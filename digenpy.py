@@ -40,7 +40,7 @@ if len(sys.argv) == 2:
 
 def printer(a_print):
     if __name__ == "__main__":
-        if a_print.__class__ is types.ClassType:
+        if a_print.__class__ is types.ListType:
             for a in a_print: print a
         else:
             print a_print
