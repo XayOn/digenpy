@@ -11,8 +11,7 @@ To see available modules, just exec digenpy.py, you'll get an output like:
 	    Dlink		Usage: Dlink Bssid 
         Jazztel		Usage: Jazztel Bssid Essid
         Tele2		Usage: Tele2 year fixed_data [''|'IV']
-        Telefonica	Usage: Telefonica Bssid Essid
-
+        Telefonica	Usage: Telefonica Bssid Essid [WPA]
 
 Adding countries
 ----------------
