@@ -9,5 +9,5 @@ setup(name='Digenpy',
       author_email='xayon@davidfrancos.net',
       url='http://github.com/XayOn/Digenpy',
       packages=['Digenpy'],
-      scripts=['digenpy'],
+      scripts=['digenpy', 'digenpy-gtk'],
      )

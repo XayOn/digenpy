@@ -88,7 +88,8 @@ class Telefonica():
             self.dictionary="Usage: Telefonica Bssid Essid [WPA]"
             return
 
-        if "WPA" in args[0][3]:
+        print args
+        if "WPA" in args[0][2]:
             self.dictionary=JazztelAndTelefonicaWPA(args).dictionary
         else:
             self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], {
@@ -102,7 +103,7 @@ class Telefonica():
 class JazztelAndTelefonicaWPA():
     def __init__(self, *args):
         args=args[0]
-        if not len(args[0]) > 1:
+        if not len(args) > 1:
             self.return_=1
             return
         self.mac=args[0][1].replace(':','')
