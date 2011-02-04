@@ -85,14 +85,10 @@ class Jazztel():
 class Telefonica():
     def __init__(self, *args):
         if not len(args[0]) > 1:
-            self.dictionary="Usage: Telefonica Bssid Essid [WPA]"
+            self.dictionary="Usage: Telefonica Bssid Essid"
             return
 
-        print args
-        if "WPA" in args[0][2]:
-            self.dictionary=JazztelAndTelefonicaWPA(args).dictionary
-        else:
-            self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], {
+        self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], {
             "00:60:B3": ["Z-com", "Z001349"],
             "00:01:38": ["Xavi 7768r", "X000138"] ,
             "00:03:C9": ["Comtrend 535", "C0030DA"],
@@ -100,21 +96,36 @@ class Telefonica():
             "00:16:38": [ "Comtrend_536+", "C0030DA"],
             "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] }).dictionary
 
+class TelefonicaWPA():
+    def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.dictionary="Usage: TelefonicaWPA Bssid Essid"
+            return
+
+        self.dictionary=JazztelAndTelefonicaWPA(args[0][2], args[0][1]).dictionary
+
+class JazztelWPA():
+    def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.dictionary="Usage: JazztelWPA Bssid Essid"
+            return
+
+        self.dictionary=JazztelAndTelefonicaWPA(args[0][2], args[0][1]).dictionary
+
 class JazztelAndTelefonicaWPA():
     def __init__(self, *args):
-        args=args[0]
-        if not len(args) > 1:
+        if not len(args[0]) > 1:
             self.return_=1
             return
-        self.mac=args[0][1].replace(':','')
-        self.essid=args[0][2].split("_")[1]
+        self.mac=args[0].replace(':','')
+        self.essid=args[0].split("_")[1]
         self.static="bcgbghgg"
 
     @property
     def dictionary(self):
         if hasattr(self, 'return_'):
             return
-        return hashlib.md5(self.static + self.mac[:-4] + self.essid + self.mac).hexdigest()[:-12]
+        return [hashlib.md5(self.static + self.mac[:-4] + self.essid + self.mac).hexdigest()[:-12], ]
 
 class JazztelAndTelefonica():
     def __init__(self, *args):
