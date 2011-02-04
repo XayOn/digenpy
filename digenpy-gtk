@@ -17,7 +17,7 @@
 
 """
 from Digenpy import *
-import sys, Digenpy, types, pygtk, gtk, gtk.glade, gobject
+import sys, Digenpy, types, pygtk, gtk, gobject
 
 class BasicDicts:
     def __init__(self):
@@ -51,7 +51,7 @@ class MainGUI:
         self.dicts=BasicDicts()
 
         self.builder=gtk.Builder()
-        self.builder.add_from_file('digenpy-gtk.glade')
+        self.builder.add_from_file('/usr/share/digenpy.ui')
         self.widgets=self.builder
         self.window=self.builder.get_object('MainWindow')
 

@@ -10,4 +10,5 @@ setup(name='Digenpy',
       url='http://github.com/XayOn/Digenpy',
       packages=['Digenpy'],
       scripts=['digenpy', 'digenpy-gtk'],
+      data_files=[('/usr/share/', ['digenpy.ui'])],
      )
