@@ -18,13 +18,11 @@
 """
 from Digenpy import *
 import sys, Digenpy, types, pygtk, gtk, gobject
+from gettext import gettext as _
 
 class BasicDicts:
     def __init__(self):
         self.z=[]
-
-    def get_countries(self):
-        return Digenpy.__all__
 
     def get_companies(self, country):
         c=[]
@@ -42,7 +40,7 @@ class BasicDicts:
         self.printer(fo, getattr(module, company)(['gui', bssid, essid]).dictionary)
 
     def printer(self, fo, a_print):
-        for a in a_print: 
+        for a in a_print:
             fo.write(a)
             fo.write('\n')
 
@@ -59,49 +57,52 @@ class MainGUI:
                 'on_button_ok_clicked': self.generate,
                 'on_button_cancel_clicked': gtk.main_quit,
                 'on_country_selected': self.populate_companies,
+                'on_ignore_clicked': self.destroy_dialog
                 })
 
-        self.country=self.widgets.get_object('country')
         self.company=self.widgets.get_object('company')
-        self.populate_countries()
+        self.country=self.update_combobox(Digenpy.__all__, self.widgets.get_object('country'))
+        self.except_window=self.builder.get_object('ErrorWindow')
+        sys.excepthook = self.exception_handler
         self.window.show()
 
-    def populate_countries(self):
+    def destroy_dialog(self, widgets):
+        self.except_window.hide()
+
+    def exception_handler(self, type_, value, traceback):
+        self.widgets.get_object('message').set_label(value.__str__())
+        self.except_window.show()
+
+    def update_combobox(self, dict_, widget):
         model = gtk.ListStore(gobject.TYPE_STRING)
-        self.country.set_model(None)
-        for entry in self.dicts.get_countries():
+        for entry in dict_:
             model.append([entry])
-        self.country.set_model(model)
+        widget.set_model(None)
+        widget.set_model(model)
         cell = gtk.CellRendererText()
-        self.country.pack_start(cell, True)
-        self.country.add_attribute(cell, 'text',0)
+        widget.pack_start(cell, True)
+        widget.add_attribute(cell, 'text',0)
+        return widget
 
     def populate_companies(self, widgets):
         self._country=self.country.get_model()[self.country.get_active()][0]
-        model = gtk.ListStore(gobject.TYPE_STRING)
-        self.company.set_model(None)
-        for entry in self.dicts.get_companies(self._country):
-            model.append([entry])
-        self.company.set_model(model)
-        cell = gtk.CellRendererText()
-        self.company.pack_start(cell, True)
-        self.company.add_attribute(cell, 'text',0)
-
+        self.company=self.update_combobox(self.dicts.get_companies(self._country), self.company)
 
     def generate(self, widgets):
         bssid=self.widgets.get_object('bssid').get_text()
         essid=self.widgets.get_object('essid').get_text()
         file_=self.widgets.get_object('file').get_text()
+
         try:
             self._company=self.company.get_model()[self.company.get_active()][0]
         except:
             pass
         if not bssid or not essid or not file_ or not self._company or not self._country:
-            raise Exception('Error: Some of the needed data is missing\nMake sure you\'ve entered the bssid, essid and destfile, as well as company and country')
+            raise Exception(_('Error: Some of the needed data is missing\nMake sure you\'ve entered the bssid, essid and destfile, as well as company and country'))
+
         self.dicts.generate(self._country, self._company, open(file_,'a+'), bssid, essid)
-        raise Exception('Dicts correctly generated in ' + file_)
+        raise Exception(_('Dicts correctly generated in ') + file_)
 
 if __name__== "__main__":
     MainGUI()
-    import Digenpy.gtkexcepthook
     gtk.main()
