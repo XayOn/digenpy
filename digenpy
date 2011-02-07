@@ -16,8 +16,8 @@
         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 """
-from Digenpy import *
-import sys, Digenpy, types
+from Digenpy_ import *
+import sys, Digenpy_, types
 
 if len(sys.argv) < 2:
     print 'Usage: %s Country Company [Year] [Mac] [ESSID]\n %s Country To see al contrys available, and\n %s Country Company to see some company specific usage\n' %(sys.argv[0], sys.argv[0], sys.argv[0])
@@ -25,9 +25,9 @@ if len(sys.argv) < 2:
 
 if len(sys.argv) == 2:
     print 'Available countries:'
-    for i in Digenpy.__all__:
+    for i in Digenpy_.__all__:
         print i
-        mod=getattr(Digenpy, i)
+        mod=getattr(Digenpy_, i)
         for a in dir(mod):
             if isinstance(getattr(mod, a, None), types.ClassType):
                 help_=getattr(mod, a)('').dictionary
@@ -46,7 +46,7 @@ def printer(a_print):
             print a_print
 
 z=[]
-module=getattr(Digenpy, sys.argv[1])
+module=getattr(Digenpy_, sys.argv[1])
 [z.append(getattr(module, sys.argv[2])) for a in dir(module)\
     if isinstance(getattr(module, a, None), types.ClassType) and a in sys.argv[2].split(',') ]
 [printer(i(sys.argv[2:]).dictionary) for i in z]

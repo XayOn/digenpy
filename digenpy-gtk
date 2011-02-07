@@ -16,8 +16,8 @@
         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 """
-from Digenpy import *
-import sys, Digenpy, types, pygtk, gtk, gobject
+from Digenpy_ import *
+import sys, Digenpy_, types, pygtk, gtk, gobject
 from gettext import gettext as _
 
 class BasicDicts:
@@ -26,7 +26,7 @@ class BasicDicts:
 
     def get_companies(self, country):
         c=[]
-        mod=getattr(Digenpy, country)
+        mod=getattr(Digenpy_, country)
         for a in dir(mod):
             if isinstance(getattr(mod, a, None), types.ClassType):
                 help_=getattr(mod, a)('').dictionary
@@ -35,8 +35,7 @@ class BasicDicts:
         return c
 
     def generate(self, country, company, fo, bssid, essid):
-        module=getattr(Digenpy, country)
-        print getattr(module, company)(['gui',bssid, essid,]).dictionary
+        module=getattr(Digenpy_, country)
         self.printer(fo, getattr(module, company)(['gui', bssid, essid]).dictionary)
 
     def printer(self, fo, a_print):
@@ -49,7 +48,7 @@ class MainGUI:
         self.dicts=BasicDicts()
 
         self.builder=gtk.Builder()
-        self.builder.add_from_file('/usr/share/digenpy.ui')
+        self.builder.add_from_file(sys.prefix + '/share/digenpy.ui')
         self.widgets=self.builder
         self.window=self.builder.get_object('MainWindow')
 
@@ -61,7 +60,7 @@ class MainGUI:
                 })
 
         self.company=self.widgets.get_object('company')
-        self.country=self.update_combobox(Digenpy.__all__, self.widgets.get_object('country'))
+        self.country=self.update_combobox(Digenpy_.__all__, self.widgets.get_object('country'))
         self.except_window=self.builder.get_object('ErrorWindow')
         sys.excepthook = self.exception_handler
         self.window.show()
