@@ -21,7 +21,7 @@ The module must follow a few guidelines, foreach kind of routers (usually compan
 
 --- SampleCountry.py ---
 class Skel():
-    def __init__(self, *args):
+    def __init__(self, \*args):
         if not len(args[0]) > 1:
             self.return_=1
             return
@@ -37,7 +37,7 @@ class Skel():
         return ['a','b]
 
 
-Et voilá, that will allow the program to throw help when called without arguments, and auto_build general help =)
+That will allow the program to throw help when called without arguments, and auto_build general help =)
 
 Now, if you execute digenpy.py without arguments it will spit out something like:
     Available countries:
@@ -58,6 +58,11 @@ To install on windows you'll need a python interpreter installed, as well as pyG
 After having them installed, you double click "setup.bat" wich will procceed to install it.
 From now on, you'll have it into your python26/Scripts directory, where you can double click
 it, or make a link.
-Note that this is like that because some trouble I'm having with bundle-making, I've enabled
-py2exe in the setup.py and provide an nsis installer, so if you're able to make them work let
- me know
+
+I've published a bundle installer with nsis in the project's page.
+You can build it by your own with:
+    python setup.py py2exe
+    # Copy gtk dlls in dist/
+    # Execute NSIS against installer.nsi
+And voilá, you'll have the installer ready =)
+
