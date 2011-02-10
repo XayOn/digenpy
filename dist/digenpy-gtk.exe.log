@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "digenpy-gtk.py", line 20, in <module>
+  File "gtk\__init__.pyc", line 30, in <module>
+  File "gobject\__init__.pyc", line 26, in <module>
+  File "glib\__init__.pyc", line 22, in <module>
+  File "glib\_glib.pyc", line 12, in <module>
+  File "glib\_glib.pyc", line 10, in __load
+ImportError: DLL load failed: No se puede encontrar el módulo especificado.
