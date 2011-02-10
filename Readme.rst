@@ -1,0 +1,63 @@
+About Digenpy
+--------------
+Digenpy is a set of dictionary generators written in python.
+It's extremely modular and easily extensible.
+
+Usage
+------
+To see available modules, just exec digenpy.py, you'll get an output like:
+    Available countries:
+    Spanish
+	    Dlink		Usage: Dlink Bssid 
+        Jazztel		Usage: Jazztel Bssid Essid
+        Tele2		Usage: Tele2 year fixed_data [''|'IV']
+        Telefonica	Usage: Telefonica Bssid Essid [WPA]
+
+Adding countries
+----------------
+To add a new country, just insert the module in digenpy/ directory, with the country name.
+Then add the module name to digenpy/__init__.py in the __all__ tuple.
+The module must follow a few guidelines, foreach kind of routers (usually company producing or distributing them) it has to have a class, basically composed of __init__ dictionary(self) (as property) and the checks to the docs. A sample skeleton follows
+
+--- SampleCountry.py ---
+class Skel():
+    def __init__(self, *args):
+        if not len(args[0]) > 1:
+            self.return_=1
+            return
+        self.sample="saaaaaaaaaaample"
+        self.parameter_one=args[0][1]
+        self.parameter_two=args[0][2] # Note that all parameters are in args[0], and starts counting at [1]
+
+    @property
+    def dictionary(self):
+        if hasattr(self, 'return_'):
+            return "Usage: Saaaaaaaample parameter_one parameter_two %s %s " %(self.parameter_one, self.parameter_two)
+
+        return ['a','b]
+
+
+Et voilá, that will allow the program to throw help when called without arguments, and auto_build general help =)
+
+Now, if you execute digenpy.py without arguments it will spit out something like:
+    Available countries:
+    Spanish
+	    Dlink		Usage: Dlink Bssid 
+        Jazztel		Usage: Jazztel Bssid Essid
+        Tele2		Usage: Tele2 year fixed_data [''|'IV']
+        Telefonica	Usage: Telefonica Bssid Essid
+    SampleCountry
+        Skep        Usage: saaaaaaaaaaaaample
+
+Et voilá =), oh, also, note that dictionary property must return a list like in ['a','b']
+
+Installation on windows
+-----------------------
+
+To install on windows you'll need a python interpreter installed, as well as pyGTK bundle.
+After having them installed, you double click "setup.bat" wich will procceed to install it.
+From now on, you'll have it into your python26/Scripts directory, where you can double click
+it, or make a link.
+Note that this is like that because some trouble I'm having with bundle-making, I've enabled
+py2exe in the setup.py and provide an nsis installer, so if you're able to make them work let
+ me know
