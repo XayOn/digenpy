@@ -17,23 +17,16 @@
 
 """
 from Digenpy_ import *
-import sys, Digenpy_, types, Android
+import sys, Digenpy_, types, android
 from gettext import gettext as _
 
 class MainGUI:
     def __init__(self):
         self.droid=android.Android()
         sys.excepthook = self.exception_handler
-        self.country=self.get_country()
-        self.company=self.get_company()
         self.generate()
 
-    def get_companies(self, country):
-        mod=getattr(Digenpy_, country)
-        return [ a for a in dir(mod) if isinstance(getattr(mod, a, None),
-            types.ClassType) and getattr(mod, a)('').dictionary ]
-
-    def generate(self, country, company, fo, bssid, essid):
+    def _generate(self, country, company, fo, bssid, essid):
         return self.printer(fo, getattr( getattr(Digenpy_, country),
             company)(['gui', bssid, essid]).dictionary)
 
@@ -41,37 +34,37 @@ class MainGUI:
         return [ fo.write(a + '\n') for a in a_print ]
 
     def exception_handler(self, type_, value, traceback):
-        return self.droid.makeToast(value.__str__())
-
-    def get_country(self):
-        self.droid.dialogCreateAlert('Select country')
-        self.droid.dialogSetItems(Digenpy_.__all__)
+        self.droid.dialogCreateAlert(value.__str__())
         self.droid.dialogShow()
-        if result.has_key('item'):
-            return Digenpy_.__all__[result['item']]
-        else:
-            return "Spanish"
-
-    def get_company(self):
-        companies=self.get_companies(self.country)
-        self.droid.dialogCreateAlert('Select company')
-        self.droid.dialogSetItems(companies)
-        self.droid.dialogShow()
-        if result.has_key('item'):
-            return companies[result['item']]
-        else:
-            raise Exception('Wrong company')
 
     def generate(self):
-        bssid=self.droid.getInput('BSSID', 'Insert BSSID')
-        essid=self.droid.getInput('ESSID', 'Insert ESSID')
-        file_=self.droid.getInput('FILE', 'Insert destination file route (start it with /sdcard)')
+        self.droid.dialogCreateAlert('Country', 'Select country')
+        self.droid.dialogSetItems(Digenpy_.__all__)
+        self.droid.dialogShow()
+        result=self.droid.dialogGetResponse().result['item']
+        self.country=Digenpy_.__all__[result]
+        print self.country
+        mod=getattr(Digenpy_, self.country)
+        self.companies=[ a for a in dir(mod) if isinstance(getattr(mod, a, None),
+            types.ClassType) and getattr(mod, a)('').dictionary ]
+
+        self.droid.dialogCreateAlert('Select company')
+        self.droid.dialogSetItems(self.companies)
+
+        self.droid.dialogShow()
+        result=self.droid.dialogGetResponse().result['item']
+        self.company=self.companies[result]
+
+        bssid=self.droid.getInput('BSSID', 'Insert BSSID').result
+        essid=self.droid.getInput('ESSID', 'Insert ESSID').result
+        file_=self.droid.getInput('FILE', 'Insert destination file route (start it with /sdcard)').result
 
         if not bssid or not essid or not file_ or not self.company or not self.country:
             raise Exception(_('Error: Some of the needed data is missing\nMake sure you\'ve entered the bssid, essid and destfile, as well as company and country'))
 
-        self.generate(self.country, self.company, open(file_,'a+'), bssid, essid)
+        self._generate(self.country, self.company, open(file_,'a+'), bssid, essid)
         raise Exception(_('Dicts correctly generated in ') + file_)
 
 if __name__ == "__main__":
     MainGUI()
+    droid.exit()
