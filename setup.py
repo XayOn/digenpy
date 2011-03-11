@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # For some reason, building exes with py2exe doesnt work right now.
 from distutils.core import setup
-import sys, os, shutil
+import sys, os, shutil, sys
 
 scripts=['digenpy', 'digenpy-gtk']
 if os.name is not "posix":
@@ -10,7 +10,7 @@ if os.name is not "posix":
     shutil.copyfile('digenpy','digenpy.py')
     shutil.copyfile('digenpy-gtk','digenpy-gtk.py')
     scripts=['digenpy.py', 'digenpy-gtk.py']
-	
+
 opts = {
     "py2exe": {
         'includes': 'cairo, pango, pangocairo, atk, gobject, gio',
