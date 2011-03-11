@@ -9,6 +9,7 @@ if os.name is not "posix":
         import py2exe
     shutil.copyfile('digenpy','digenpy.py')
     shutil.copyfile('digenpy-gtk','digenpy-gtk.py')
+    shutil.copyfile('digenpy-gtk','digenpy-gtk.py')
     scripts=['digenpy.py', 'digenpy-gtk.py']
 	
 opts = {
@@ -36,5 +37,6 @@ setup(name='Digenpy',
       packages=['Digenpy_'],
       scripts=scripts,
       options=opts,
-      data_files=[(sys.prefix + '/share', ['digenpy.ui'])],
+      data_files=[(sys.prefix + '/share', ['digenpy.ui']),
+      ('share', ['digenpy.ui'])],
      )
