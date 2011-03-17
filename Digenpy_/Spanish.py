@@ -94,6 +94,7 @@ class Telefonica():
             "00:03:C9": ["Comtrend 535", "C0030DA"],
             "00:A0:C5": [ "Zyxel 650HW/660HW", "Z001349"],
             "00:16:38": [ "Comtrend_536+", "C0030DA"],
+            "00:02:CF": [ "P-660HW-D1", "Z0002CF" ],
             "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] }).dictionary
 
 class TelefonicaWPA():
