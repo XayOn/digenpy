@@ -17,7 +17,7 @@
 
 """
 from Digenpy_ import *
-import sys, Digenpy_, types, pygtk, gtk, gobject
+import sys, Digenpy_, types, pygtk, gtk, gobject, pkg_resources
 from gettext import gettext as _
 
 class BasicDicts:
@@ -48,7 +48,8 @@ class MainGUI:
         self.dicts=BasicDicts()
 
         self.builder=gtk.Builder()
-        self.builder.add_from_file(sys.prefix + '/share/digenpy.ui')
+        self.digenpy_ui=pkg_resources.resource_filename('Digenpy_', 'Digenpy.ui')
+        self.builder.add_from_file(self.digenpy_ui)
         self.widgets=self.builder
         self.window=self.builder.get_object('MainWindow')
 
