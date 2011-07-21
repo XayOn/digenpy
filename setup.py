@@ -48,5 +48,5 @@ setup(name='Digenpy',
       scripts=scripts,
       options=opts,
       data_files=[(sys.prefix + '/share', ['digenpy.ui']),
-      ('share', ['digenpy.ui'])],
+      ('.',['digenpy.ui'])],
      )
