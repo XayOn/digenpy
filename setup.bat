@@ -1,2 +1,2 @@
 setup.py py2exe
-shutdown -h now
+shutdown -s

@@ -23,7 +23,8 @@ package="digenpy"
 version=1.3.4
 user=xayon
 owner=XayOn
-remote_host=192.168.1.13
+remote_host=192.168.1.10
+path=personal/important/
 #opts="-us -uc"  # Enable if you're not me 
 
 mkdeb(){
@@ -42,9 +43,11 @@ mkexe(){
     stop_vm
     echo "Launching windows virtual machine"
     launch_vm windows
-    sleep 90;
+    sleep 30;
+    echo "Copying data"
+    scp -r * $remote_host:build
     echo "Executing setup.bat"
-    ssh $remote_host devel/$package/setup.bat
+    ssh $remote_host "cd build && setup.bat"
     echo "Setup.bat has been executed"
 }
 
