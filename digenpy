@@ -16,38 +16,38 @@
         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 """
-
 from Digenpy_ import *
 import sys, Digenpy_, types
-from optparse import OptionParser
 
-parser = OptionParser(usage="%prog [-y|--year YEAR] -u|--country COUNTRY\
-      -p|--company COMPANY -M|--mac MAC -E|--essid ESSID", version="%prog 1.0")
-parser.add_option("-y", "--year", dest="year", help="Router year")
-parser.add_option("-u", "--country", dest="country", help="Country")
-parser.add_option("-p", "--company", dest="company", help="Router company")
-parser.add_option("-M", "--mac", dest="mac", help="Router year")
-parser.add_option("-E", "--essid", dest="essid", help="Router year")
-parser.add_option("-s", "--show", action="store_bool", dest="show_countries",
-        help="Display all available companies for all available countries")
+if len(sys.argv) < 2:
+     print 'Usage: %s Country Company [Year] [Mac] [ESSID]\n %s Country To see al contrys available, and\n %s Country Company to see some company specific usage\n' %(sys.argv[0], sys.argv[0], sys.argv[0])
+     sys.exit(1)
 
-if not options.country and options.company and options.mac and options.essid:
-    parser.error("Country, company, mac and essid are necessary")
+if len(sys.argv) == 2:
+    print 'Available countries:'
+    for i in Digenpy_.__all__:
+        print i
+        mod=getattr(Digenpy_, i)
+        for a in dir(mod):
+            if isinstance(getattr(mod, a, None), types.ClassType):
+                help_=getattr(mod, a)('').dictionary
+                if help_:
+                    if len(a) > 9: b="\t"
+                    else: b="\t\t"
+                    print '\t%s%s%s' %(a, b, help_)
+                        
+    sys.exit(1)
 
-if options.show_countries:
-    for module in [ getattr(Digenpy, mod) for mod in Digenpy_.__all__ ]:
-        help_=[ getattr(module, func)('').dictionary for func in dir(module)
-                if isinstance(getattr(module, func, None), types.ClassType) ]
-        printer(help_, 'Available countries')
-    sys.exit(0)
+def printer(a_print):
+    if __name__ == "__main__":
+        if a_print.__class__ is types.ListType:
+            for a in a_print: print a
+        else:
+            print a_print
 
-def printer(a_print, help_=False):
-    if help_: print help_
-    if a_print.__class__ is not types.ListType:
-        print a_print
-    else:
-        for a in a_print: print a
+z=[]
+module=getattr(Digenpy_, sys.argv[1])
+[z.append(getattr(module, sys.argv[2])) for a in dir(module)\
+    if isinstance(getattr(module, a, None), types.ClassType) and a in sys.argv[2].split(',') ]
+[printer(i(sys.argv[2:]).dictionary) for i in z]
 
-module=getattr(Digenpy_, parser.country) 
-printer( getattr( getattr(Digenpy_, parser.country),
-    parser.company)(class_arguments).dictionary)

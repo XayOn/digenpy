@@ -89,11 +89,12 @@ class Telefonica():
             return
 
         self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], {
-            "00:60:B3": ["Z-com", "Z001349"],
-            "00:01:38": ["Xavi 7768r", "X000138"] ,
-            "00:03:C9": ["Comtrend 535", "C0030DA"],
+            "00:60:B3": [ "Z-com", "Z001349"],
+            "00:01:38": [ "Xavi 7768r", "X000138"] ,
+            "00:03:C9": [ "Comtrend 535", "C0030DA"],
             "00:A0:C5": [ "Zyxel 650HW/660HW", "Z001349"],
             "00:16:38": [ "Comtrend_536+", "C0030DA"],
+            "00:1A:2B": [ "Comtrend 5361", "C001D20"],
             "00:02:CF": [ "P-660HW-D1", "Z0002CF" ],
             "00:23:F8": [ "P-660HW-D1", "Z0023F8"],
             "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] }).dictionary

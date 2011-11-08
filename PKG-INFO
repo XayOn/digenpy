@@ -1,0 +1,15 @@
+Metadata-Version: 1.1
+Name: Digenpy
+Version: 1.3.4
+Summary: Python default wireless dictionary generators
+Home-page: http://github.com/XayOn/Digenpy
+Author: David Francos Cuartero (XayOn)
+Author-email: xayon@davidfrancos.net
+License: GPL2
+Download-URL: http://github.com/XayOn/Digenpy
+Description: Default password dictionary generator for multiple companys
+Platform: UNKNOWN
+Classifier: Development Status :: 4 - Beta
+Classifier: Environment :: Console
+Requires: pygtk
+Requires: gettext
