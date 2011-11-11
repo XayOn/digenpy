@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <title>Digenpy dictionary generator</title>
+    <script>
+      var droid = new Android();
+      var speak = function() {
+        droid.postEvent("speack", [
+             document.getElementById("essid").value,
+             document.getElementById("bssid").value,
+             document.getElementById("year").value,
+             document.getElementById("fixed_data").value,
+             document.getElementById("type").value
+        ]);
+      }
+    </script>
+  </head>
+  <body>
+    <form onsubmit="speak(); return false;">
+      <label for="essid">AP Name</label><input type="text" id="essid" />
+      <label for="bssid">AP MAC</label><input type="text" id="bssid" />
+      <label for="year">AP Year</label><input type="text" id="year" />
+      <label for="fixed_data">Fixed data</label><input type="text" id="fixed_data" />
+      <label for="type">Encryption (enter WEP or WPA)</label><input type="text" id="type" />
+      <input type="submit" value="generate" />
+    </form>
+  </body>
+</html>
+
