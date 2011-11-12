@@ -3,31 +3,30 @@
 #
 #          FILE:  Package_generator
 # 
-#         USAGE:  ./generate_debian_package.sh 
+#         USAGE:  ./Package_generator.sh
 # 
-#   DESCRIPTION:  Generates packages for debian and exes
+#   DESCRIPTION:  Generates packages for debian, android sdk and exes
 # 
-#       OPTIONS:  [deb] [exe] [apk]
+#       OPTIONS:  [deb] [exe] [apk] 
 #  REQUIREMENTS:  python-stdeb
 #          BUGS:  None described
 #         NOTES:  None
 #        AUTHOR:  David Francos Cuartero (XayOn)
 #       COMPANY: 
 #       CREATED:  22/07/11 05:10:10 CEST
-#      REVISION:  0.1
+#      REVISION:  0.2
 #===============================================================================
-export ANDROID_SDK_HOME=/home/xayon 
-ANDROID_SDK="/usr/share/android-sdk/"
-ANDROID_SDK_TOOLS="${ANDROID_SDK}/tools"
-Package="Digenpy"
+
+export ANDROID_SDK_HOME=~
+export user=$USER
+path=`pwd`
+export ANDROID_SDK="/usr/local/share/android/"
+
+remote_host=192.168.1.10
 package="Digenpy"
 version=1.3.4
-user=xayon
-owner=XayOn
-remote_host=192.168.1.10
-path=`pwd`
-#opts="-us -uc"  # Enable if you're not me 
-export ANDROID_SDK 
+
+#opts="-us -uc"  # Enable if you're not the owner of the debian package to be built.
 
 mkdeb(){
     python setup.py sdist
@@ -59,15 +58,15 @@ mkapk(){
     echo "Checkout to git branch"
     git checkout android
     echo "Making ant release, signing and zipaligning it"
-    ant release && jarsigner -verbose -keystore /home/$user/.android.keystore ./bin/$package-release-unsigned.apk $owner
-    $ANDROID_SDK_TOOLS/zipalign -v 4 ./bin/$Package-release-unsigned.apk releases/$Package-$version.apk
+    ant release && jarsigner -verbose -keystore /home/$user/.android.keystore ./bin/$package-release-unsigned.apk $user
+    $ANDROID_SDK/tools/zipalign -v 4 ./bin/$package-release-unsigned.apk releases/$package-$version.apk
     echo "Now installing into the virtual machine"
-    $ANDROID_SDK/platform-tools/adb install -r releases/$Package-$version.apk
+    $ANDROID_SDK/platform-tools/adb install -r releases/$package-$version.apk
 }
 
 _gen_new_android_key(){
     keytool -genkey -v -keystore /home/$user/.android.keystore \
-    -alias $owner -keyalg RSA -keysize 2048 -validity 10000
+    -alias $user -keyalg RSA -keysize 2048 -validity 10000
 }
 
 [[ "$1" == "" ]] && {
