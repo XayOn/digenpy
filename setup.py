@@ -27,7 +27,7 @@ opts = {
     }
 
 setup(name='Digenpy',
-      version='1.3.4',
+      version='1.3.5',
       description='Python default wireless dictionary generators',
       author='David Francos Cuartero (XayOn)',
       windows = [{"script": "digenpy-gtk.py" }],
