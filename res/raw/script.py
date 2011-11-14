@@ -28,15 +28,17 @@ class DigenpyAndroid(object):
         logging.info("Starting script, getting API, interface is\
                 digenpy_interface.html by default at /sdcard for tests")
         self.droid=android.Android()
-        self.webviewfile="auto.html"
-        self.generate_interface('/sdcard/digenpy_interface.html')
+        self.generate_interface('file:///sdcard/digenpy_interface.html')
 
-    def generate_interface(self, company):
-        self.droid.webViewShow(self.webviewfile)
+    def generate_interface(self, webviewfile):
+        self.droid.webViewShow(webviewfile)
         self.droid.toggleWifiState(1)
         while True:
-            self.data=self.droid.EventWaitfor('generate_dict').result
-            self.publish_results()
+            try:
+                self.data=self.droid.eventWaitFor('generate_dict').result
+                self.publish_results(self.data.pop('company'))
+            except:
+                pass
 
     def get_requisites(self, company):
         c_reqs=getattr(self, company)()

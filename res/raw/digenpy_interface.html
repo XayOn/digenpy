@@ -1,6 +1,9 @@
 <html>
   <head>
-    <title>Digenpy dictionary generator</title>
+      <title>Digenpy dictionary generator</title>
+      <link rel="stylesheet" href="jquery.css" />
+      <script src="jquery.js"> </script>
+      <script src="jqmobile.js"> </script>
     <script>
       var droid = new Android();
       var speak = function() {
@@ -14,8 +17,9 @@
       }
     </script>
   </head>
-  <body>
+  <body data-role="content" >
     <form onsubmit="speak(); return false;">
+      <label for="company">Company name</label><input type="text" id="company" />
       <label for="essid">AP Name</label><input type="text" id="essid" />
       <label for="bssid">AP MAC</label><input type="text" id="bssid" />
       <label for="year">AP Year</label><input type="text" id="year" />
