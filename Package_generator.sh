@@ -60,6 +60,8 @@ mkapk(){
     echo "Making ant release, signing and zipaligning it"
     ant release && jarsigner -verbose -keystore /home/$user/.android.keystore ./bin/$package-release-unsigned.apk $user
     $ANDROID_SDK/tools/zipalign -v 4 ./bin/$package-release-unsigned.apk releases/$package-$version.apk
+    read -p "Press enter to launch virtual machine named $package and install package. If you've not created a VM named $package do it now"
+    $ANDROID_SDK/platform-tools/android avd list | grep $package|| $ANDROID_SDK/platform-tools/android create avd --name $package -t 1
     echo "Now installing into the virtual machine"
     $ANDROID_SDK/platform-tools/adb install -r releases/$package-$version.apk
 }
