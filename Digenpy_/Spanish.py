@@ -97,6 +97,11 @@ class Telefonica():
             "00:1A:2B": [ "Comtrend 5361", "C001D20"],
             "00:02:CF": [ "P-660HW-D1", "Z0002CF" ],
             "00:23:F8": [ "P-660HW-D1", "Z0023F8"],
+            "40:4A:03": [ "Zyxel p660", "Z404A03"],
+            "50:67:F0": [ "Zyxel", "Z5067F0"],
+            "E0:91:53" : [ "Xavi 7968-Solos 4610RD/461x", "E0:91:53" ],
+            "00:1F:9F" : ["Thomson 2009", "T5YF69A"], 
+            "00:18:03": [ "Huawei echolife hg520v (ftth)", "H4A60BA", "H538FBF"],
             "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] }).dictionary
 
 class TelefonicaWPA():
