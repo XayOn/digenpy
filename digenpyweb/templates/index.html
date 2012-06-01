@@ -1,0 +1,148 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+    <title>Digenpy - online default wireless dictionary generator tool</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="Online default wireless dictionary generator tool">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap-responsive.min.css')}}">
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/script.js')}}"></script>
+
+    <!--[if lt IE 9]>
+        <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div class="span6" style="float:none; margin-left:auto; margin-right:auto">
+        <div class="page-header">
+            <h1 style="font-size:81px"> Digenpy </h1>
+            <p class="lead"> Check your wireless security</p>
+       </div>
+    </div>
+
+    <div role="main">
+
+        <div class="container-fluid"> 
+            <div class="span4">
+                <div class="well"> 
+                    <h3> About </h3><hr>
+                    <p> Digenpy is a WEP dictionary generator suitable for multiple platforms, modular, easily extendable, and currently supporting dozens of different routers from different companies.<br/>
+                    It also generates WPA passphrase for Telefonica and Jazztel's WLAN_XXXX
+</p>
+
+                </div>
+                <div class="well">
+                    <h3> Supported routers </h3><hr>
+                    <p> Currently, following companies' routers are supported </p>
+                    <ul class="">
+                        <li>Telefonica</li>
+                        <li>Jazztel</li>
+                        <li>Tele2</li>
+                        <li>Dlink</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="span4">
+                <form class="form-horizontal" method="post" action="#" onsubmit="do_digenpy(); return false">
+                    <fieldset>
+                        <legend>Try it online!</legend>
+                        <div class="control-group">
+                            <div class="alert"> Right now, only Spanish routers are available </div>
+                            <label class="control-label" for="company">Company</label>
+                            <div class="controls">
+                                <select id="company" name="company">
+                                    <option value="Telefonica">Telefonica</option>
+                                    <option value="Dlink">Dlink</option>
+                                    <option value="Jazztel">Jazztel</option>
+                                    <option value="Tele2">Tele2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="mac">Mac address</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" name="mac" placeholder="XX:XX:XX:XX" pattern="[0-9A-Z][0-9A-Z]:[0-9A-Z][0-9A-Z]:[0-9A-Z][0-9A-Z]:[0-9A-Z][0-9A-Z]:[0-9A-Z][0-9A-Z]:[0-9A-Z][0-9A-Z]" value="" id="mac">
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="essid">Network name (essid)</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" id="essid">
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                                <label class="checkbox"> <input type="checkbox" name="WPA"> Is WPA? </label>
+                                <button class="btn btn-success btn-large" > Generate dict / return passphrase </button>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                <div class="control-group">
+                    <label class="control-label" for="result"> Result: </label>
+                    <div class="controls">
+                        <iframe id="result" style="height:30px; width:280px" class="input-xlarge"> </iframe>
+                    </div>
+                </div>
+                </form>
+            </div>
+            <div class="span3" style="margin-left:90px;">
+
+
+                <div class="well">
+                    <h3> Download </h3>
+                        <hr>
+                    <h4> <a href="https://github.com/XayOn/Digenpy/zipball/master">Downlad for linux </a></h4>
+                    <h4> <a href="http://pypi.python.org/pypi/Digenpy">Source page on pypi </a></h4>
+                    <h4> Download for windows (soon) </h4>
+                </div>
+
+                <div class="well">
+                    <h3> Donate! </h3>
+                    <hr>
+                    <p> To help keep developing such amazing software, you can donate to <a href="http://degeneratedlabs.net"> Degeneratedlabs non profit organization </a> here:</p>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post"><input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----"><input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!"><img alt="" border="0" src="https://www.paypalobjects.com/es_ES/i/scr/pixel.gif" width="1" height="1"></form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <div class="well container-fluid" style=" margin-bottom:0px; padding-bottom:20px; padding-top:20px;" >
+            <div class="span13 " style=" margin-left:30px; float:none; margin-left:auto; margin-right:auto; padding-bottom:20px; padding-top:20px">
+                <div class="span3">
+                    <h3> About </h3><hr/>
+                    <p> Have a look at my online CV <a href="http://davidfrancos.net"> David Francos Cuartero </a></p>
+                    <p> This project is inspired from seguridadwireless.net's dictionary generators, trying to be a (much more) friendly place for people than theirs </p>
+                </div>
+
+                <div class="span6">
+                    <h3> Other projects </h3><hr/>
+                    <div class="span1">
+                        <img src="/static/images/airoscript.png">
+                    </div>
+                    <div class="span3"> 
+<p>                        Airoscript-ng, aircrack-ng companion. In conjunction with Digenpy can test your network (in)security in minutes </p>
+                    </div>
+                </div>
+                <div class="span3">
+                    <h3> Source code </h3><hr>
+                    <p> This is free software under the license GNU GPL 2+, you're free to contact me if you've got any license requirements, you can get the source (among other places) directly from its (heh) source at <a href="http://github.com/XayOn/Digenpy"> my github </a></p>
+                </div>
+            </div>
+        </div>
+</body>
+</html>
