@@ -4,18 +4,14 @@
 */
 
 function get_digenpy_url(){
-    if ($('#wpa').val()){
-        return "/get/Spanish/" + $('#company').val() + "/" + $('#mac').val() + "/" + $('#essid').val()
+	if($('#WPA').is(':checked')){
+		return "/get/Spanish/" + $('#company').val() + "/" + $('#mac').val() + "/" + $('#essid').val() + "/WPA";
     }
-    return "/get_file/Spanish/" + $('#company').val() + "/" + $('#mac').val() + "/" + $('#essid').val()
+	return "/get_file/Spanish/" + $('#company').val() + "/" + $('#mac').val() + "/" + $('#essid').val() + "/";
 }
 
 function do_digenpy(){
-    if ($('#wpa').val()){
-        
-    } else {
-        $('#result').attr('src',get_digenpy_url());
-    }
+    $('#result').attr('src',get_digenpy_url());
 }
 
 
