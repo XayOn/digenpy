@@ -7,12 +7,12 @@ app.config['DEBUG'] = True
 def index():
     return render_template('index.html')
 
-@app.route('/get/<country>/<company>/<mac>/<essid>/<wpa>')
+@app.route('/get/<country>/<company>/<mac>/<essid>')
 def do_digenpy(country, company, mac, essid, wpa=False):
     if wpa:
         wpa="WPA"
     result = getattr(getattr(Digenpy_, country), company)(['',
-        mac, essid, wpa]).dictionary
+        mac, essid]).dictionary
     app.logger.info(result)
     if not result:
         abort(501)
