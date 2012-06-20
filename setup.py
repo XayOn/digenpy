@@ -11,7 +11,7 @@ if os.name is not "posix":
     shutil.copyfile('digenpy-gtk','digenpy-gtk.py')
     shutil.copyfile('digenpy-gtk','digenpy-gtk.py')
     scripts=['digenpy.py', 'digenpy-gtk.py']
-	
+
 opts = {
     "py2exe": {
         'includes': 'cairo, pango, pangocairo, atk, gobject, gio',
@@ -27,7 +27,7 @@ opts = {
     }
 
 setup(name='Digenpy',
-      version='1.3.5',
+      version='1.4',
       description='Python default wireless dictionary generators',
       author='David Francos Cuartero (XayOn)',
       windows = [{"script": "digenpy-gtk.py" }],
@@ -38,7 +38,7 @@ setup(name='Digenpy',
       license='GPL2',
       requires=['pygtk','gettext'],
       classifiers=[
-          'Development Status :: 4 - Beta',
+          'Development Status :: 5 - Production/Stable',
           'Environment :: Console',
       ],
       mantainer='David Francos Cuartero (XayOn)',
