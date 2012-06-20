@@ -17,7 +17,7 @@ def do_digenpy(country, company, mac, essid):
     if method == "POST":
         return json.dumps(result)
     elif method == "GET":
-        return result
+        return '\n'.join(result)
 
 @app.route('/get_file/<country>/<company>/<mac>/<essid>')
 def download_file(country, company, mac, essid):
