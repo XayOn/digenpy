@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, Response
+from flask import Flask, render_template, abort, Response, request
 import Digenpy_, json
 from Digenpy_ import *
 app = Flask(__name__)
@@ -9,13 +9,14 @@ def index():
 
 @app.route('/get/<country>/<company>/<mac>/<essid>')
 def do_digenpy(country, company, mac, essid):
+    method = request.environ['REQUEST_METHOD']
     result = getattr(getattr(Digenpy_, country),
         company)(['', mac, essid]).dictionary
     if not result:
         abort(404)
-    if request.method == "POST":
+    if method == "POST":
         return json.dumps(result)
-    elif request.method == "GET":
+    elif method == "GET":
         return result
 
 @app.route('/get_file/<country>/<company>/<mac>/<essid>')
