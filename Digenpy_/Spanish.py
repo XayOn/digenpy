@@ -3,7 +3,7 @@
     Spanish Dictionary Generators for WEP and WPA Networks library
     I know, I know, this is not PEP8'ized
     This time... fuck PEP8.
- 
+
      Copyright (C) 2010 David Francos Cuartero
         This program is free software; you can redistribute it and/or
         modify it under the terms of the GNU General Public License
@@ -20,7 +20,7 @@
         Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 """
-import sys, string, hashlib
+import string, hashlib
 
 class Dlink():
     def __init__(self, *args):
@@ -77,10 +77,7 @@ class Jazztel():
         if not len(args[0]) > 1:
             self.dictionary="Usage: Jazztel Bssid Essid [WPA]"
             return
-        if args[0][3] is "WPA":
-            self.dictionary=JazztelAndTelefonicaWPA(args).dictionary
-        else:
-            self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], { '00:1A:2B' : ['Comtrend', 'E001D20'] } ).dictionary
+        self.dictionary=JazztelAndTelefonica(args[0][1], args[0][2], { '00:1A:2B' : ['Comtrend', 'E001D20'] } ).dictionary
 
 class Telefonica():
     def __init__(self, *args):
@@ -100,7 +97,7 @@ class Telefonica():
             "40:4A:03": [ "Zyxel p660", "Z404A03"],
             "50:67:F0": [ "Zyxel", "Z5067F0"],
             "E0:91:53" : [ "Xavi 7968-Solos 4610RD/461x", "E0:91:53" ],
-            "00:1F:9F" : ["Thomson 2009", "T5YF69A"], 
+            "00:1F:9F" : ["Thomson 2009", "T5YF69A"],
             "00:18:03": [ "Huawei echolife hg520v (ftth)", "H4A60BA", "H538FBF"],
             "00:13:49": [ "P-660HW-D1", "Z001349", "Z0002CF" ] }).dictionary
 
@@ -109,30 +106,30 @@ class TelefonicaWPA():
         if not len(args[0]) > 1:
             self.dictionary="Usage: TelefonicaWPA Bssid Essid"
             return
-
-        self.dictionary=JazztelAndTelefonicaWPA(args[0][2], args[0][1]).dictionary
+        self.dictionary=JazztelAndTelefonicaWPA(*args).dictionary
 
 class JazztelWPA():
     def __init__(self, *args):
         if not len(args[0]) > 1:
             self.dictionary="Usage: JazztelWPA Bssid Essid"
             return
-
-        self.dictionary=JazztelAndTelefonicaWPA(args[0][2], args[0][1]).dictionary
+        self.dictionary=JazztelAndTelefonicaWPA(*args).dictionary
 
 class JazztelAndTelefonicaWPA():
     def __init__(self, *args):
-        if not len(args[0]) > 1:
+        args = args[0]
+        if not len(args) > 1:
             self.return_=1
             return
-        self.mac=args[0].replace(':','')
-        self.essid=args[0].split("_")[1]
+        self.mac=args[1].replace(':','')
+        self.essid=args[2].split("_")[1]
         self.static="bcgbghgg"
 
     @property
     def dictionary(self):
         if hasattr(self, 'return_'):
             return
+
         return [hashlib.md5(self.static + self.mac[:-4] + self.essid + self.mac).hexdigest()[:-12], ]
 
 class JazztelAndTelefonica():
