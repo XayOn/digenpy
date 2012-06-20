@@ -8,18 +8,18 @@ def index():
     return render_template('index.html')
 
 @app.route('/get/<country>/<company>/<mac>/<essid>')
-def do_digenpy(country, company, mac, essid, wpa=False):
-    if wpa:
-        wpa="WPA"
-    result = getattr(getattr(Digenpy_, country), company)(['',
-        mac, essid]).dictionary
-    app.logger.info(result)
+def do_digenpy(country, company, mac, essid):
+    result = getattr(getattr(Digenpy_, country),
+        company)(['', mac, essid]).dictionary
     if not result:
-        abort(501)
-    return json.dumps(result)
+        abort(404)
+    if request.method == "POST":
+        return json.dumps(result)
+    elif request.method == "GET":
+        return result
 
-@app.route('/get_file/<country>/<company>/<mac>/<essid>/<wpa>')
-def download_file(country, company, mac, essid, wpa=False):
+@app.route('/get_file/<country>/<company>/<mac>/<essid>')
+def download_file(country, company, mac, essid):
     return Response(do_digenpy(country, company, mac, essid),
         mimetype='application/x-digenpy-dic' )
 
