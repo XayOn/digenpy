@@ -27,12 +27,12 @@ opts = {
     }
 
 setup(name='Digenpy',
-      version='1.4',
+      version='1.4.1',
       description='Python default wireless dictionary generators',
-      author='David Francos Cuartero (XayOn)',
+      author='David Francos Cuartero',
       windows = [{"script": "digenpy-gtk.py" }],
       console = [{"script": "digenpy.py" }],
-      author_email='xayon@davidfrancos.net',
+      author_email='me@davidfrancos.net',
       url='http://github.com/XayOn/Digenpy',
       download_url='http://github.com/XayOn/Digenpy',
       license='GPL2',
