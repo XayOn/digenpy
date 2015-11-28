@@ -1,4 +1,3 @@
 *dist*
+*.pyc
 build
-digenpy-gtk.py
-digenpy.py

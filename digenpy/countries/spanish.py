@@ -24,12 +24,7 @@
 
 import string
 import hashlib
-
-
-class Dictionary(object):
-    def __init__(self, caller, cls):
-        self.caller = caller
-        self.parser = caller.subparsers[cls.__module__][cls.__class__.__name__]
+from digenpy.dictionary import Dictionary
 
 
 class Dlink(Dictionary):
@@ -98,7 +93,7 @@ class Tele2(Dictionary):
     def __init__(self, caller):
         super(self.__class__, self).__init__(caller, self)
         self.parser.add_argument('--year', type=str, required=True)
-        self.parser.add_argument('--fixed',action="store_true", required=True)
+        self.parser.add_argument('--fixed', action="store_true", required=True)
 
     def run(self):
         self.year = self.caller.args.year
@@ -167,7 +162,6 @@ class Telefonica(Dictionary):
                     self.essid[-2],
                     self.essid[-1]
                 )
-
 
     @property
     def static_dict(self):
