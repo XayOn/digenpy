@@ -28,15 +28,20 @@ import digenpy.countries
 
 
 class Dictionary(object):
+    """ Base dictionary class """
     def __init__(self, caller, cls):
         self.caller = caller
-        self.parser = caller.subparsers[cls.__module__][cls.__class__.__name__]
+        self.cls = cls
+
+    @property
+    def parser(self):
+        """ Parser """
+        cls = self.cls
+        return self.caller.subparsers[cls.__module__][cls.__class__.__name__]
 
 
 def extract_classes(module):
-    """
-        Extracts all classes in a module
-    """
+    """ Extracts all classes in a module """
     try:
         module = import_module(str(module))
         for class_ in inspect.getmembers(module, inspect.isclass):
@@ -46,41 +51,49 @@ def extract_classes(module):
         pass
 
 
-class Main(object):
+class Digenpy(object):
     """ Main digenpy class """
-    def __init__(self):
-        self.subparsers = {}
-        self.parser = argparse.ArgumentParser(
+    subparsers = defaultdict(dict)
+    companies = defaultdict(dict)
+
+    @property
+    def countries(self):
+        """ List of modules in countries package """
+        modules = iter_modules(digenpy.countries.__path__)
+        return ["digenpy.countries.{}".format(mod) for _, mod, _ in modules]
+
+    @property
+    def parser(self):
+        """ Argument parser magic """
+        parser = argparse.ArgumentParser(
             description='Digenpy, default router password generator')
 
-        modules = iter_modules(digenpy.countries.__path__)
-        frmt = "digenpy.countries.{}"
-
-        countries = [frmt.format(mod) for _, mod, _ in modules]
-        companies = defaultdict(dict)
-
-        subparsers = self.parser.add_subparsers(
-            help="Choose your country")
-
-        for country in countries:
-            parser_country = subparsers.add_parser(
+        for country in self.countries:
+            subparsers = parser.add_subparsers(help="Choose your country")
+            country_parser = subparsers.add_parser(
                 country, help="Companies in {}".format(country))
 
-            companies[country] = {}
-            self.subparsers[country] = {}
-            sparsers = parser_country.add_subparsers()
+            subparser = country_parser.add_subparsers()
 
             for comp in extract_classes(country):
-                self.subparsers[country][comp.__name__] = sparsers.add_parser(
+                # We parse each class and add a subparser for it.
+                self.subparsers[country][comp.__name__] = subparser.add_parser(
                     comp.__name__)
-                companies[country][comp.__name__] = comp(self)
+                self.companies[country][comp.__name__] = comp(self)
+        return parser
 
+    def __init__(self):
         self.args = self.parser.parse_args()
-        comp = companies[sys.argv[1]][sys.argv[2]]
-        comp.run()
-        for result in comp.dictionary:
-            print(result)
+        self.company = self.companies[sys.argv[1]][sys.argv[2]]
+
+
+def main():
+    """ Main """
+    digenpy_ = Digenpy()
+    digenpy_.company.run()
+    for result in digenpy_.company.dictionary:
+        print(result)
 
 
 if __name__ == "__main__":
-    Main()
+    main()
