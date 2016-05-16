@@ -24,7 +24,7 @@
 
 import string
 import hashlib
-from digenpy.dictionary import Dictionary
+from digenpy import Dictionary
 
 
 class Dlink(Dictionary):
